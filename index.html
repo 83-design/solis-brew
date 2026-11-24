@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOLIS BREW — Авторская кофейня и ботаник-бар</title>
+  <meta name="description" content="Интерактивная витрина авторских кофейных и ботанических напитков SOLIS BREW с конструктором вкуса и быстрым заказом." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Oswald:wght@600;700&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-theme="latte" data-ambience="day">
+  <!-- Ambient dynamic glow layers -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb ambient-orb--1"></div>
+    <div class="ambient-orb ambient-orb--2"></div>
+  </div>
+
+  <!-- Top Navigation -->
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="#stage" class="brand" aria-label="SOLIS BREW">
+        <span class="brand__mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+            <path d="M12 3C9.5 7 14.5 17 12 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="brand__text">
+          <strong>SOLIS BREW</strong>
+          <small>Specialty &amp; Botanicals</small>
+        </span>
+      </a>
+
+      <nav class="filter-pills" aria-label="Фильтр напитков">
+        <button class="pill is-active" data-filter="all" type="button">Все</button>
+        <button class="pill" data-filter="coffee" type="button">Кофе</button>
+        <button class="pill" data-filter="botanical" type="button">Матча &amp; Цитрус</button>
+        <button class="pill pill--accent" id="openMoodBtn" type="button">Подобрать по вкусу ✨</button>
+      </nav>
+
+      <div class="topbar__actions">
+        <div class="ambience-switch" role="group" aria-label="Режим бара">
+          <button class="ambience-switch__btn is-active" data-ambience="day" type="button" title="Дневной бар">
+            ☀ Утро
+          </button>
+          <button class="ambience-switch__btn" data-ambience="sunset" type="button" title="Вечерний бар">
+            ☾ Закат
+          </button>
+        </div>
+
+        <button class="cart-trigger" id="openCartBtn" type="button" aria-label="Открыть корзину">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 7H18L19 20H5L6 7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+            <path d="M9 7V6C9 4.34315 10.3431 3 12 3C13.6569 3 15 4.34315 15 6V7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+          <span>Корзина</span>
+          <span class="cart-trigger__badge" id="cartBadge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Showcase Stage -->
+    <section class="stage" id="stage" aria-live="polite">
+      <!-- Giant kinetic typography -->
+      <div class="kinetic-wordmark" id="kineticWordmark" aria-hidden="true">
+        <span class="kinetic-wordmark__row">LATTE</span>
+        <span class="kinetic-wordmark__row">LATTE</span>
+        <span class="kinetic-wordmark__row">LATTE</span>
+      </div>
+
+      <div class="stage__container">
+        <!-- Left: Drink Studio Visual -->
+        <div class="visual-column">
+          <div class="visual-stage" id="visualStage">
+            <div class="visual-stage__halo"></div>
+
+            <div class="visual-stage__badges">
+              <span class="meta-chip" id="drinkOriginChip">100% Арабика · Бразилия</span>
+              <span class="meta-chip meta-chip--soft" id="drinkTempChip">Подаётся со льдом</span>
+            </div>
+
+            <div class="visual-stage__frame">
+              <img
+                id="drinkImage"
+                src="./assets/latte.jpg"
+                alt="Айс-латте «Солёная карамель»"
+                class="visual-stage__img"
+              />
+            </div>
+
+            <div class="visual-stage__nav">
+              <button class="circle-nav" id="prevDrinkBtn" type="button" aria-label="Предыдущий напиток">
+                ←
+              </button>
+              <span class="slide-counter" id="slideCounter">01 / 05</span>
+              <button class="circle-nav" id="nextDrinkBtn" type="button" aria-label="Следующий напиток">
+                →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Configurator Card -->
+        <aside class="product-card" aria-label="Карточка напитка">
+          <div class="product-card__head">
+            <span class="category-tag" id="drinkCategory">Авторский кофе</span>
+            <span class="rating-pill" id="drinkRating">★ 4.9 · Хит</span>
+          </div>
+
+          <h1 class="product-card__title" id="drinkTitle">Айс-латте «Солёная карамель»</h1>
+          <p class="product-card__desc" id="drinkDesc">
+            Двойной шот светлой обжарки на шелковистом молоке с домашней карамелью и щепоткой морской соли.
+          </p>
+
+          <!-- Taste Profile Bars -->
+          <div class="taste-metrics">
+            <div class="taste-metric">
+              <div class="taste-metric__label">
+                <span>Сладость</span>
+                <span id="sweetVal">7/10</span>
+              </div>
+              <div class="taste-bar"><div class="taste-bar__fill" id="sweetBar" style="width: 70%"></div></div>
+            </div>
+            <div class="taste-metric">
+              <div class="taste-metric__label">
+                <span>Кислинка</span>
+                <span id="acidVal">3/10</span>
+              </div>
+              <div class="taste-bar"><div class="taste-bar__fill" id="acidBar" style="width: 30%"></div></div>
+            </div>
+            <div class="taste-metric">
+              <div class="taste-metric__label">
+                <span>Плотность</span>
+                <span id="bodyVal">8/10</span>
+              </div>
+              <div class="taste-bar"><div class="taste-bar__fill" id="bodyBar" style="width: 80%"></div></div>
+            </div>
+          </div>
+
+          <div class="nutrition-row" id="nutritionRow">
+            <span>210 ккал</span>
+            <span>•</span>
+            <span>125 мг кофеина</span>
+            <span>•</span>
+            <span>Готовность 4 мин</span>
+          </div>
+
+          <!-- Size selector -->
+          <div class="config-group">
+            <div class="config-group__title">Объём</div>
+            <div class="option-grid option-grid--3" id="sizeOptions"></div>
+          </div>
+
+          <!-- Base / Milk selector -->
+          <div class="config-group">
+            <div class="config-group__title" id="baseLabel">Молоко / основа</div>
+            <div class="option-grid option-grid--2" id="baseOptions"></div>
+          </div>
+
+          <!-- Toppings -->
+          <div class="config-group">
+            <div class="config-group__title">Добавить акцент</div>
+            <div class="topping-chips" id="toppingOptions"></div>
+          </div>
+
+          <!-- Price + CTA -->
+          <div class="product-card__footer">
+            <div class="price-block">
+              <span class="price-block__label">Итого за напиток</span>
+              <div class="price-block__value">
+                <span id="livePrice">360</span> <small>₽</small>
+              </div>
+            </div>
+
+            <button class="add-btn" id="addToCartBtn" type="button">
+              <span id="addToCartLabel">Добавить в корзину</span>
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Bottom Switcher Dock -->
+      <div class="dock-wrapper">
+        <div class="dock" id="drinkDock" role="tablist" aria-label="Выбор напитка"></div>
+      </div>
+    </section>
+
+    <!-- Original Added Section: Combos & Craft -->
+    <section class="craft-section" aria-label="Комбо дня и подход SOLIS">
+      <div class="craft-section__inner">
+        <div class="combo-banner">
+          <div class="combo-banner__content">
+            <span class="combo-banner__eyebrow">Спецпредложение дня · −15%</span>
+            <h2>Соберите идеальную пару к вашему напитку</h2>
+            <p>
+              Добавьте тёплый миндальный круассан на французском сливочном масле или фисташковый тарт к выбранному напитку одним кликом — скидка применится в корзине автоматически.
+            </p>
+            <div class="combo-banner__actions">
+              <button class="combo-btn" id="addComboBtn" type="button">
+                + Добавить текущий напиток и круассан (<span id="comboPrice">510</span> ₽)
+              </button>
+              <span class="promo-hint">Промокод <code>SOLIS15</code> работает на весь заказ</span>
+            </div>
+          </div>
+          <div class="combo-banner__cards">
+            <article class="feature-mini">
+              <strong>Своя обжарка</strong>
+              <p>Светлый и средний профиль каждую неделю под холодные и молочные рецепты.</p>
+            </article>
+            <article class="feature-mini">
+              <strong>Ботаника без сиропов-пустышек</strong>
+              <p>Натуральное пюре юдзу, красный апельсин, каркаде и живые травы.</p>
+            </article>
+            <article class="feature-mini">
+              <strong>Точный баланс льда</strong>
+              <p>Кристальный лёд медленного таяния сохраняет текстуру до последнего глотка.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mood Picker Modal -->
+  <div class="modal-backdrop" id="moodModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="moodModalTitle">
+      <div class="modal__head">
+        <div>
+          <span class="modal__eyebrow">Экспресс-сомелье</span>
+          <h2 id="moodModalTitle">Какое у вас сегодня настроение?</h2>
+        </div>
+        <button class="icon-close" id="closeMoodBtn" type="button" aria-label="Закрыть">✕</button>
+      </div>
+      <div class="mood-grid">
+        <button class="mood-card" data-mood="energy" type="button">
+          <span class="mood-card__emoji">⚡</span>
+          <strong>Освежиться и взбодриться</strong>
+          <small>Искристый цитрус юдзу, тимьян и яркий эспрессо</small>
+        </button>
+        <button class="mood-card" data-mood="comfort" type="button">
+          <span class="mood-card__emoji">🍯</span>
+          <strong>Мягкий сливочный уют</strong>
+          <small>Солёная карамель и нежная текстура айс-латте</small>
+        </button>
+        <button class="mood-card" data-mood="dessert" type="button">
+          <span class="mood-card__emoji">🍫</span>
+          <strong>Как холодный десерт</strong>
+          <small>Фраппе с тёмным шоколадом и жареным миндалём</small>
+        </button>
+        <button class="mood-card" data-mood="zen" type="button">
+          <span class="mood-card__emoji">🌿</span>
+          <strong>Спокойный фокус без кофе</strong>
+          <small>Церемониальная матча или вечерний каскара-физз</small>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide-over Cart Drawer -->
+  <div class="drawer-backdrop" id="cartBackdrop" hidden></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Корзина заказа" hidden>
+    <div class="cart-drawer__head">
+      <div>
+        <h2>Ваш заказ</h2>
+        <small id="cartCountText">Пока пусто</small>
+      </div>
+      <button class="icon-close" id="closeCartBtn" type="button" aria-label="Закрыть корзину">✕</button>
+    </div>
+
+    <div class="cart-drawer__body" id="cartBody"></div>
+
+    <div class="cart-drawer__footer" id="cartFooter">
+      <div class="upsell-box" id="upsellBox">
+        <div>
+          <strong>Миндальный круассан</strong>
+          <small>Хрустящая корочка и крем франжипан · 240&nbsp;₽</small>
+        </div>
+        <button class="upsell-btn" id="upsellBtn" type="button">+ Добавить</button>
+      </div>
+
+      <form class="promo-form" id="promoForm">
+        <input type="text" id="promoInput" placeholder="Промокод (например, SOLIS15)" autocomplete="off" />
+        <button type="submit">Применить</button>
+      </form>
+      <div class="promo-status" id="promoStatus"></div>
+
+      <div class="cart-summary">
+        <div class="cart-summary__row">
+          <span>Сумма</span>
+          <span id="cartSubtotal">0 ₽</span>
+        </div>
+        <div class="cart-summary__row cart-summary__row--discount" id="discountRow" hidden>
+          <span>Скидка</span>
+          <span id="cartDiscount">−0 ₽</span>
+        </div>
+        <div class="cart-summary__row cart-summary__row--total">
+          <span>К оплате</span>
+          <span id="cartTotal">0 ₽</span>
+        </div>
+      </div>
+
+      <form class="checkout-form" id="checkoutForm">
+        <input type="text" id="customerName" placeholder="Ваше имя для стаканчика" required />
+        <input type="text" id="customerNote" placeholder="Комментарий: меньше льда, без трубочки…" />
+        <button class="checkout-btn" type="submit">Оформить заказ</button>
+      </form>
+    </div>
+  </aside>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
